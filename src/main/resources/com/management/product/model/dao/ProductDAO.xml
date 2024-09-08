@@ -7,6 +7,7 @@
 <mapper namespace="com.management.product.model.dao.ProductDAO">
 
 
+
     <!-- 2. ProductDTO type의 resultMap을 설정하세요. -->
 
     <!-- 1. <resultMap> 테스트 -->
