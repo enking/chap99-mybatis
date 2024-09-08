@@ -39,6 +39,16 @@ public class ProductPrint {
     }
 
     public void printSuccessMessage(String successCode) {
+        String successMessage = "";
+        switch (successCode){
+            case "insert":
+                successMessage = "제품 정보 등록에 성공"; break;
+            case "update":
+                successMessage = "제품 정보 수정에 성공"; break;
+            case "delete":
+                successMessage = "제품 정보 삭제에 성공"; break;
+        }
+        System.out.println(successMessage);
 
         // 3. 성공메시지를 출력하는 메소드
         //    (조건) 성공코드를 전달받아 성공을 알리는 메시지를 출력하세요.
@@ -53,6 +63,12 @@ public class ProductPrint {
         switch (errorCode){
             case "select":
                 errorMessage="조회 결과 없음"; break;
+            case "insert":
+                errorMessage = "제품 정보 등록에 실패"; break;
+            case "update":
+                errorMessage = "제품 정보 수정에 실패"; break;
+            case "delete":
+                errorMessage = "제품 정보 삭제에 실패"; break;
         }
         System.out.println(errorMessage);
 

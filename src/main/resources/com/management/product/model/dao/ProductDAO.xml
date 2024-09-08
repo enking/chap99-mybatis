@@ -99,6 +99,14 @@
 
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
+    <insert id="insertProduct" parameterType="com.management.product.model.dto.ProductDTO">
+        INSERT INTO
+        product_info (product_code, product_name, origin_cost, release_date, discount_rate, sales_quantity,
+        stock_quantity, category_code, production_status)
+        VALUES
+        (#{ productCode }, #{ productName }, #{ originCost }, #{ releaseDate }, #{ discountRate }, #{ salesQuantity },
+        #{ stockQuantity }, #{ categoryCode }, #{ productionStatus })
+    </insert>
 
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
