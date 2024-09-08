@@ -35,7 +35,16 @@ public class ProductService {
 
         // 3. 조건에 따른 제품 목록을 조회하는 로직을 작성하세요.
         // 　　아래 작성된 return null은 과제 툴 오류를 제거하고자 임의 작성하였으니 지우고 로직을 작성하세요.
-        return null;
+        SqlSession sqlSession = getSqlSession();
+        productDAO = sqlSession.getMapper(ProductDAO.class);
+
+        List<ProductDTO> productList = productDAO.selectProductByCondition(searchCondition);
+
+        sqlSession.close();
+
+        System.out.println(searchCondition.toString());
+
+        return productList;
 
     }
 

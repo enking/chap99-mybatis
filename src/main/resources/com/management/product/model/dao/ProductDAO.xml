@@ -49,12 +49,71 @@
             (참고 2) 판매점 유형별 조회의 경우,
                      '백화점'이면 할인율이 0%인 제품, '아울렛'이면 할인율이 1% 이상인 제품을 조회합니다.
             (참고 3) 이달의 신상품 조희의 경우, 출시일이 이번 달인 제품(예를 들어, 현재 기준이면 2023년 5월 출시 제품)울 조회합니다. -->
+    <select id="selectProductByCondition" resultMap="productResultMap">
+        SELECT
+        product_code
+        , product_name
+        , origin_cost
+        , release_date
+        , discount_rate
+        , sales_quantity
+        , stock_quantity
+        , category_code
+        , production_status
+        FROM product_info
+        <where>
+            <choose>
+                <when test="option == 'productName'">
+                    product_name LIKE CONCAT('%', #{ value }, '%')
+                </when>
+                <when test="option == 'salesStore'">
+                    <choose>
+                        <when test="value == '백화점'">
+                            discount_rate = 0
+                        </when>
+                        <when test="value == '아울렛'">
+                            discount_rate > 0
+                        </when>
+                        <otherwise>
+                            discount_rate is null
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="option == 'newProduct'">
+                    LEFT(RELEASE_DATE, 6) = LEFT(DATE_FORMAT(NOW(), '%Y%m%d'), 6)
+                </when>
+                <when test="option == 'nonProduction'">
+                    production_status = 'N'
+                </when>
+                <otherwise>
+                    1 = 2
+                </otherwise>
+            </choose>
+        </where>
+
+    </select>
+
+
+
+
 
     <!-- 5. 제품 정보를 등록하는 쿼리를 작성하세요.
             (쿼리id) insertProduct -->
 
     <!-- 6. 사용자가 수정을 원하는 데이터만 수정하도록 Dynamic Query를 활용한 쿼리를 작성하세요.
             (쿼리id) updateProduct -->
+    <update id="updateProduct" parameterType="com.management.product.model.dto.ProductDTO">
+        UPDATE product_info
+        SET product_name = #{ productName }
+        , origin_cost = #{ originCost }
+        , release_date = #{ releaseDate }
+        , discount_rate = #{ discountRate }
+        , sales_quantity = #{ salesQuantity }
+        , stock_quantity = #{ stockQuantity }
+        , category_code = #{ categoryCode }
+        , production_status = #{ productionStatus }
+        WHERE product_code = #{ productCode }
+    </update>
 
     <!-- 7. 제품 정보를 삭제하는 쿼리를 작성하세요.
             (쿼리id) deleteProduct -->

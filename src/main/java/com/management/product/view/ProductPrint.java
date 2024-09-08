@@ -32,6 +32,9 @@ public class ProductPrint {
         // 2. 조건에 따라 조회한 목록을 출력하는 메소드
         //    (조건 1) SearchCondition 객체로 검색 조건이 무엇인지 출력하세요.
         //    (조건 2) List<ProductDTO>로 받아온 데이터 목록을 전체 출력하세요.
+        String searchOption = searchCondition.getOption();
+        System.out.println("===== 검색 조건 : " + searchOption + " =====");
+        productList.forEach(System.out::println);
 
     }
 
